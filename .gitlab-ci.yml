@@ -1,0 +1,39 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  GOOGLE_CREDENTIALS: <project service account key>
+  GOOGLE_PROJECT_ID: <google project id>
+  SLACK_USER_TOKEN: <Slack user token with correct API scopes>
+  SLACK_MESSAGE_CHANNEL: <Channel to post notification messages for Slack admins>
+  SLACK_CHANNEL_IDS: <Channels to add the new user>
+  SLACK_TEAM_ID: <The Slack Workspace ID>
+
+test:
+  stage: test
+  image: node:18
+  script:
+    - npm install
+    - npm test
+
+build:
+  stage: build
+  image: hashicorp/terraform:latest
+  script:
+    - cd terraform
+    - terraform validate
+
+deploy:
+  stage: deploy
+  image: hashicorp/terraform:latest
+  script:
+    - cd terraform
+    - terraform plan -out=tfplan
+    - terraform apply -auto-approve tfplan
+  dependencies:
+    - build
+  artifacts:
+    paths:
+      - terraform/tfplan
