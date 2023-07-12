@@ -4,12 +4,12 @@ stages:
   - deploy
 
 variables:
-  GOOGLE_CREDENTIALS: <project service account key>
-  GOOGLE_PROJECT_ID: <google project id>
-  SLACK_USER_TOKEN: <Slack user token with correct API scopes>
-  SLACK_MESSAGE_CHANNEL: <Channel to post notification messages for Slack admins>
-  SLACK_CHANNEL_IDS: <Channels to add the new user>
-  SLACK_TEAM_ID: <The Slack Workspace ID>
+  GOOGLE_CREDENTIALS: $TF_GOOGLE_CREDENTIALS
+  GOOGLE_PROJECT_ID: $TF_GOOGLE_PROJECT_ID
+  SLACK_USER_TOKEN: $TF_SLACK_USER_TOKEN
+  SLACK_MESSAGE_CHANNEL: $TF_SLACK_MESSAGE_CHANNEL
+  SLACK_CHANNEL_IDS: $TF_SLACK_CHANNEL_IDS
+  SLACK_TEAM_ID: $TF_SLACK_TEAM_ID
 
 test:
   stage: test
